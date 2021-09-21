@@ -10,7 +10,7 @@ battle_est = {0:'< 2k',1: '2k - 25k',2:'20k - 250k',3:'200k - 2.5m',4:'2m - 35m'
 
 
 
-api_key = 'NDErpdX4WW1qWLrg'
+api_key = '************'  # API KEY
 
 #5m	50m	500m	5b	50b  networth triggers
 #100	5,000	10,000	20,000	30,000	50,000 crime triggers
