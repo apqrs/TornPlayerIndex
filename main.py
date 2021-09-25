@@ -2,6 +2,7 @@ import requests
 import time
 from alive import keep_alive
 import json
+from random import choice
 
 
 ranks = {'Absolute beginner': 0, 'Beginner': 1, 'Inexperienced': 2, 'Rookie': 3, 'Novice': 4, 'Below average': 5, 'Average': 6, 'Reasonable': 7, 'Above average': 8, 'Competent': 9, 'Highly competent': 10, 'Veteran': 11, 'Distinguished': 12, 'Highly distinguished': 13, 'Professional': 14, 'Star': 15, 'Master': 16, 'Outstanding': 17, 'Celebrity': 18, 'Supreme': 19, 'Idolized': 20, 'Champion': 21, 'Heroic': 22, 'Legendary': 23, 'Elite': 24, 'Invincible': 25}
@@ -10,7 +11,7 @@ battle_est = {0:'< 2k',1: '2k - 25k',2:'20k - 250k',3:'200k - 2.5m',4:'2m - 35m'
 
 
 
-api_key = '************'  # API KEY
+api_key = 'NDErpdX4WW1qWLrg'
 
 #5m	50m	500m	5b	50b  networth triggers
 #100	5,000	10,000	20,000	30,000	50,000 crime triggers
@@ -65,6 +66,8 @@ def stats_estimate(key):
   # age = response["age"]
   last_action = response["last_action"]["relative"]
   last_action = last_action.split()
+  if last_action[0] == 'No':
+    return -1, -1, -1, -1
   last_action = int(last_action[0])
   # dif = abs(age - last_action)
   score = crimeScore(crimes) + lvlScore(lvl) + netScore(networth)
@@ -90,8 +93,8 @@ def stats_estimate(key):
         "color":0,
         "result":"",
         "fair_fight":1.0,
-        "flat_respect":0.9431471805599453,
-        "base_respect":0.9431471805599453,
+        "flat_respect":0.0,
+        "base_respect":0.0,
         "win":1
         }
 
@@ -105,7 +108,7 @@ keep_alive()
 def main():
   print('Program started.')
   # no_of_players = 0
-  start = 1800821
+  start = 1805000
   desired = 2
   # lvD = 30
   desired_diff = 600
@@ -114,15 +117,19 @@ def main():
     time.sleep(10)
     
     
-    start += 1
+    start += choice([1,2,3])
     # print(j, start)
     # if no_of_players > 5000:
     #   exit()
     try:
       stats, i, d, dat = stats_estimate(start)
-      print(f'Running analysis at {start} Stats:{stats}', end= '\r')
 
-      if d >= desired_diff:
+      if stats == -1:
+        continue
+
+      print(f'Running analysis at {start} Stats:{stats}', end= '\r')
+      # print(dat["status_description"])
+      if d >= desired_diff and dat["status_description"]!="In federal jail permanently":
 
         if i == desired:
           # no_of_players += 1
